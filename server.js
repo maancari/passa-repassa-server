@@ -5,7 +5,16 @@ const path = require('path');
 
 const app = express();
 const server = http.createServer(app);
-const io = socketIo(server);
+
+// --- Configuração do Socket.IO com CORS ---
+// Permite conexões do domínio do seu GitHub Pages
+const io = socketIo(server, {
+    cors: {
+        origin: "https://maancari.github.io", // **MUDE ESTE PARA A URL BASE DO SEU GITHUB PAGES**
+        methods: ["GET", "POST"],
+        credentials: true // Necessário para algumas configurações de socket
+    }
+});
 
 // --- Configuração do Servidor de Arquivos Estáticos ---
 // Serve os arquivos da pasta 'passa-repassa' (seus HTML, CSS, JS)
